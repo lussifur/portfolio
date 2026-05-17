@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charan G | Portfolio</title>
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --primary: #2563eb; /* Tech Blue */
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --text-gray: #64748b;
+            --bg-card: #ffffff;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
+        
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+        
+        nav ul { display: flex; gap: 2rem; }
+        nav a:hover { color: var(--primary); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5rem 20px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%);
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 1.25rem; color: var(--text-gray); max-width: 600px; margin-bottom: 2rem; }
+        
+        .btn {
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 5px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .btn:hover { background: #1d4ed8; transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-left: 10px; }
+        .btn-outline:hover { background: var(--primary); color: white; }
+
+        /* --- SECTIONS COMMON --- */
+        section { padding: 5rem 10%; }
+        .section-title { text-align: center; margin-bottom: 3rem; font-size: 2rem; position: relative; }
+        .section-title::after {
+            content: ''; display: block; width: 60px; height: 4px; background: var(--primary);
+            margin: 10px auto 0; border-radius: 2px;
+        }
+
+        /* --- ABOUT & EDUCATION --- */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: flex-start; }
+        .edu-card {
+            background: white; padding: 2rem; border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        /* --- EXPERIENCE SECTION --- */
+        .exp-card {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #10b981;
+            margin-bottom: 1.5rem;
+        }
+        .exp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .exp-role { font-size: 1.2rem; font-weight: bold; }
+        .exp-company { color: var(--primary); font-weight: 600; }
+        .exp-date { font-size: 0.9rem; color: var(--text-gray); background: #f1f5f9; padding: 4px 10px; border-radius: 15px; }
+
+        /* --- PROJECTS --- */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .project-card {
+            background: white; border-radius: 10px; overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .project-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .tag { display: inline-block; background: #e2e8f0; padding: 4px 10px; border-radius: 15px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px; color: #475569; }
+        .project-link { margin-top: auto; padding-top: 15px; color: var(--primary); font-weight: 600; display: inline-block; }
+        .project-link:hover { text-decoration: underline; }
+
+        /* --- CERTIFICATES --- */
+        .cert-container { display: flex; flex-direction: column; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+        .cert-item {
+            background: white; padding: 1.5rem; border-radius: 8px;
+            display: flex; flex-direction: column; gap: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; transition: 0.3s;
+        }
+        @media (min-width: 600px) {
+            .cert-item { flex-direction: row; align-items: center; justify-content: space-between; }
+        }
+        .cert-info h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+        .cert-info p { color: var(--text-gray); font-size: 0.9rem; }
+        .cert-actions { display: flex; align-items: center; gap: 1rem; }
+        .cert-date { font-weight: bold; color: var(--text-gray); font-size: 0.9rem; }
+        .btn-view {
+            padding: 8px 16px; background-color: transparent; border: 1px solid var(--primary);
+            color: var(--primary); border-radius: 4px; font-size: 0.9rem; font-weight: 500;
+            text-decoration: none; white-space: nowrap; transition: all 0.2s ease;
+        }
+        .btn-view:hover { background-color: var(--primary); color: white; }
+
+        /* --- CONTACT --- */
+        .contact { text-align: center; background: var(--dark); color: white; }
+        .contact p { color: #94a3b8; margin-bottom: 1rem; }
+        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem; flex-wrap: wrap; }
+        .social-links a { font-size: 1.1rem; border: 1px solid #334155; padding: 10px 20px; border-radius: 5px; color: white; }
+        .social-links a:hover { background: var(--primary); border-color: var(--primary); }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            nav ul { display: none; }
+            .exp-header { flex-direction: column; align-items: flex-start; gap: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Charan G.</div>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="profile.jpg" alt="Charan G" class="profile-img">
+
+        <h1>Hi, I'm <span>Charan G</span></h1>
+        <p>Student at Alliance University | Website Developer | Data Analysis & Engineering</p>
+        <div>
+            <a href="#projects" class="btn">View My Work</a>
+            <a href="#contact" class="btn btn-outline">Contact Me</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-grid">
+            <div>
+                <p>I am a passionate B.Tech CSE student located in Bengaluru, Karnataka. I have a strong background in Engineering, Data Analysis, and Forensic Technology. I enjoy solving real-world problems through code and have hands-on experience in web development and automated systems.</p>
+                <br>
+                <div style="margin-top: 10px;">
+                    <strong>Top Skills:</strong><br>
+                    <span class="tag">Data Analysis</span>
+                    <span class="tag">Forensic Technology</span>
+                    <span class="tag">Engineering</span>
+                    <span class="tag">Web Development</span>
+                </div>
+            </div>
+            <div class="edu-card">
+                <h3>Alliance University</h3>
+                <p style="color: var(--primary); font-weight: 600;">B.Tech in Computer Science Engineering</p>
+                <p style="color: var(--text-gray); margin-top: 10px;">2024 - 2028</p>
+                <ul style="margin-top: 10px; list-style: disc; margin-left: 20px;">
+                    <li>Focus: Software Engineering, Data Structures, IoT</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" style="background: #f8fafc;">
+        <h2 class="section-title">Work Experience</h2>
+        <div style="max-width: 800px; margin: 0 auto;">
+            
+            <div class="exp-card">
+                <div class="exp-header">
+                    <div>
+                        <div class="exp-role">Website Developer</div>
+                        <div class="exp-company">Future Interns</div>
+                    </div>
+                    <div class="exp-date">Dec 2025 - Present</div>
+                </div>
+                <p style="color: var(--text-gray);">
+                    Currently working as a Website Developer, building and maintaining web solutions.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="projects" style="background: #f1f5f9;">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="project-grid" style="justify-content: center;">
+            
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Alliance One 'Shastra' Event Scanner</h3>
+                    <p style="margin: 10px 0; color: var(--text-gray);">
+                        Developed a specialized web application to track student participation during the 3-day Alliance One 'Shastra' event. The system utilizes real-time face capture technology to seamlessly log and monitor attendees.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="tag">Web Development</span>
+                        <span class="tag">Face Capture</span>
+                        <span class="tag">Event Management</span>
+                    </div>
+                    <a href="https://event-scanner-plum.vercel.app/" target="_blank" class="project-link">View Live Website &rarr;</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Automated Smart Attendance System</h3>
+                    <p style="margin: 10px 0; color: var(--text-gray);">
+                        Developed a system to automate the attendance process, reducing manual errors and saving time. The system utilizes sensors/cameras to detect presence and logs data automatically to a database for reporting.
+                    </p>
+                    <div style="margin-top: 10px;">
+                        <span class="tag">IoT</span>
+                        <span class="tag">Automation</span>
+                        <span class="tag">Database Management</span>
+                    </div>
+                    <span class="project-link" style="color: #94a3b8; text-decoration: none;">Internal Project</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="certifications">
+        <h2 class="section-title">Certifications</h2>
+        <div class="cert-container">
+
+            <div class="cert-item">
+                <div class="cert-info">
+                    <h3>AI & Emerging Technologies (5-Day Webinar Series)</h3>
+                    <p>Issued by Alliance University</p>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Achieved 100% Attendance and a 96% Quiz Score.</p>
+                </div>
+                <div class="cert-actions">
+                    <span class="cert-date">Apr 2026</span>
+                    <a href="certificates/ai-emerging.pdf" target="_blank" class="btn-view">View Certificate</a>
+                </div>
+            </div>
+
+            <div class="cert-item">
+                <div class="cert-info">
+                    <h3>Alliance One Volunteer Recognition</h3>
+                    <p>Issued by Alliance University</p>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Recognized for valuable contribution to the Inter-University Techno-Cultural-Sports event.</p>
+                </div>
+                <div class="cert-actions">
+                    <span class="cert-date">Mar 2026</span>
+                    <a href="certificates/alliance-one.pdf" target="_blank" class="btn-view">View Certificate</a>
+                </div>
+            </div>
+            
+            <div class="cert-item">
+                <div class="cert-info">
+                    <h3>AWS Certified Solutions Architect</h3>
+                    <p>Issued by Forage</p>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Skills: Scalable Hosting, Architecture Design</p>
+                </div>
+                <div class="cert-actions">
+                    <span class="cert-date">Dec 2025</span>
+                    <a href="certificates/aws-cert.pdf" target="_blank" class="btn-view">View Certificate</a>
+                </div>
+            </div>
+
+            <div class="cert-item">
+                <div class="cert-info">
+                    <h3>Deloitte Data Analytics Job Simulation</h3>
+                    <p>Issued by Forage</p>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Skills: Data Analysis, Forensic Technology</p>
+                </div>
+                <div class="cert-actions">
+                    <span class="cert-date">Dec 2025</span>
+                    <a href="certificates/deloitte-cert.pdf" target="_blank" class="btn-view">View Certificate</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 class="section-title" style="color: white; border-color: white;">Get In Touch</h2>
+        <p>I am currently open to internships and project collaborations.</p>
+        
+        <div style="margin-bottom: 2rem;">
+            <p style="margin-bottom: 0.5rem; color: white;">📞 +91 9036832720</p>
+            <p style="margin-bottom: 0.5rem; color: white;">✉️ lussifur54@gmail.com</p>
+        </div>
+
+        <a href="mailto:lussifur54@gmail.com" class="btn" style="background: white; color: var(--primary);">Send Email</a>
+
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/charan-g-35b169338" target="_blank">LinkedIn Profile</a>
+            <a href="mailto:lussifur54@gmail.com">Email Me</a>
+        </div>
+        
+        <footer style="margin-top: 3rem; font-size: 0.9rem; opacity: 0.7;">
+            &copy; 2026 Charan G. All Rights Reserved.
+        </footer>
+    </section>
+
+</body>
+</html>
