@@ -118,6 +118,7 @@
             transition: 0.3s;
             display: flex;
             flex-direction: column;
+            max-width: 600px;
         }
         .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .project-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
@@ -164,6 +165,7 @@
 </head>
 <body>
 
+    <!-- NAV -->
     <header>
         <div class="logo">Charan G.</div>
         <nav>
@@ -177,6 +179,7 @@
         </nav>
     </header>
 
+    <!-- HERO -->
     <section class="hero">
         <img src="profile.jpg" alt="Charan G" class="profile-img">
 
@@ -188,6 +191,7 @@
         </div>
     </section>
 
+    <!-- ABOUT & EDUCATION -->
     <section id="about">
         <h2 class="section-title">About Me</h2>
         <div class="about-grid">
@@ -213,6 +217,7 @@
         </div>
     </section>
 
+    <!-- EXPERIENCE -->
     <section id="experience" style="background: #f8fafc;">
         <h2 class="section-title">Work Experience</h2>
         <div style="max-width: 800px; margin: 0 auto;">
@@ -233,10 +238,12 @@
         </div>
     </section>
 
+    <!-- PROJECTS -->
     <section id="projects" style="background: #f1f5f9;">
         <h2 class="section-title">Featured Projects</h2>
         <div class="project-grid" style="justify-content: center;">
             
+            <!-- Event Scanner -->
             <div class="project-card">
                 <div class="project-content">
                     <h3>Alliance One 'Shastra' Event Scanner</h3>
@@ -252,28 +259,28 @@
                 </div>
             </div>
 
-            <div class="project-card">
-                <div class="project-content">
-                    <h3>Automated Smart Attendance System</h3>
-                    <p style="margin: 10px 0; color: var(--text-gray);">
-                        Developed a system to automate the attendance process, reducing manual errors and saving time. The system utilizes sensors/cameras to detect presence and logs data automatically to a database for reporting.
-                    </p>
-                    <div style="margin-top: 10px;">
-                        <span class="tag">IoT</span>
-                        <span class="tag">Automation</span>
-                        <span class="tag">Database Management</span>
-                    </div>
-                    <span class="project-link" style="color: #94a3b8; text-decoration: none;">Internal Project</span>
-                </div>
-            </div>
-
         </div>
     </section>
 
+    <!-- CERTIFICATIONS -->
     <section id="certifications">
         <h2 class="section-title">Certifications</h2>
         <div class="cert-container">
 
+            <!-- NEW CERT: CodeVeda 2026 -->
+            <div class="cert-item">
+                <div class="cert-info">
+                    <h3>2nd Place - CodeVeda 2026 Hackathon[cite: 6]</h3>
+                    <p>Issued by Alliance University & Microsoft Azure Developer Community Club[cite: 6]</p>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Awarded for demonstrating innovation, technical excellence, and problem-solving skills.[cite: 6]</p>
+                </div>
+                <div class="cert-actions">
+                    <span class="cert-date">Mar 2026[cite: 6]</span>
+                    <a href="certificates/codeveda.pdf" target="_blank" class="btn-view">View Certificate</a>
+                </div>
+            </div>
+
+            <!-- CERT: AI & Emerging Tech -->
             <div class="cert-item">
                 <div class="cert-info">
                     <h3>AI & Emerging Technologies (5-Day Webinar Series)</h3>
@@ -286,6 +293,7 @@
                 </div>
             </div>
 
+            <!-- CERT: Alliance One Volunteer -->
             <div class="cert-item">
                 <div class="cert-info">
                     <h3>Alliance One Volunteer Recognition</h3>
@@ -298,6 +306,7 @@
                 </div>
             </div>
             
+            <!-- Existing Certs -->
             <div class="cert-item">
                 <div class="cert-info">
                     <h3>AWS Certified Solutions Architect</h3>
@@ -325,6 +334,7 @@
         </div>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact" class="contact">
         <h2 class="section-title" style="color: white; border-color: white;">Get In Touch</h2>
         <p>I am currently open to internships and project collaborations.</p>
