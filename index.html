@@ -4,171 +4,317 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charan G | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* --- RESET & VARIABLES --- */
         :root {
-            --primary: #2563eb; /* Tech Blue */
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --accent: #06b6d4;
             --dark: #0f172a;
+            --dark-2: #1e293b;
             --light: #f8fafc;
             --text-gray: #64748b;
             --bg-card: #ffffff;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
         }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.7;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 { font-family: 'Poppins', 'Segoe UI', sans-serif; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
+        img { max-width: 100%; }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* --- REVEAL ANIMATION --- */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
         /* --- HEADER --- */
         header {
-            background: var(--dark);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: white;
-            padding: 1rem 5%;
+            padding: 1.1rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.15);
         }
 
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
-        
-        nav ul { display: flex; gap: 2rem; }
-        nav a:hover { color: var(--primary); }
+        .logo { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.5px; }
+        .logo span { color: var(--accent); }
+        nav ul { display: flex; gap: 2.2rem; }
+        nav a { font-weight: 500; font-size: 0.95rem; position: relative; }
+        nav a::after {
+            content: ''; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px;
+            background: var(--accent); transition: width 0.3s ease;
+        }
+        nav a:hover { color: var(--accent); }
+        nav a:hover::after { width: 100%; }
+
+        .menu-toggle {
+            display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; z-index: 1100;
+        }
+        .menu-toggle span { width: 26px; height: 2px; background: white; border-radius: 2px; transition: 0.3s; }
+        .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 90vh;
+            position: relative;
+            min-height: 92vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 5rem 20px;
-            background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%);
+            padding: 6rem 20px;
+            background: var(--dark);
+            overflow: hidden;
+        }
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.45;
+            z-index: 0;
+            animation: float 10s ease-in-out infinite;
+        }
+        .hero::before {
+            width: 420px; height: 420px; background: var(--primary);
+            top: -120px; left: -100px;
+        }
+        .hero::after {
+            width: 380px; height: 380px; background: var(--accent);
+            bottom: -140px; right: -100px;
+            animation-delay: 2s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
         }
 
+        .hero > * { position: relative; z-index: 1; }
+
+        .profile-img-wrap {
+            width: 190px; height: 190px; border-radius: 50%;
+            padding: 5px;
+            background: var(--gradient);
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 45px rgba(79, 70, 229, 0.35);
+        }
         .profile-img {
-            width: 180px;
-            height: 180px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid white;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
-            margin-bottom: 2rem;
+            border: 4px solid var(--dark);
+            display: block;
         }
 
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
-        .hero h1 span { color: var(--primary); }
-        .hero p { font-size: 1.25rem; color: var(--text-gray); max-width: 600px; margin-bottom: 2rem; }
-        
+        .hero h1 { font-size: 3.4rem; margin-bottom: 1rem; color: white; font-weight: 800; }
+        .hero .tagline { font-size: 1.15rem; color: #cbd5e1; max-width: 620px; margin-bottom: 2.5rem; }
+
         .btn {
-            padding: 12px 30px;
-            background: var(--primary);
+            padding: 13px 32px;
+            background: var(--gradient);
             color: white;
-            border-radius: 5px;
+            border-radius: 50px;
             font-weight: 600;
             border: none;
             cursor: pointer;
             display: inline-block;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
         }
-        .btn:hover { background: #1d4ed8; transform: translateY(-2px); }
-        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-left: 10px; }
-        .btn-outline:hover { background: var(--primary); color: white; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(79, 70, 229, 0.5); }
+        .btn-outline {
+            background: transparent; border: 2px solid rgba(255,255,255,0.3); color: white;
+            margin-left: 12px; box-shadow: none;
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; transform: translateY(-3px); box-shadow: none; }
 
-        /* --- SECTIONS COMMON --- */
-        section { padding: 5rem 10%; }
-        .section-title { text-align: center; margin-bottom: 3rem; font-size: 2rem; position: relative; }
+        /* --- SECTIONS --- */
+        section { padding: 6rem 10%; }
+        .section-title {
+            text-align: center; margin-bottom: 3.5rem; font-size: 2.2rem; font-weight: 700; position: relative;
+        }
         .section-title::after {
-            content: ''; display: block; width: 60px; height: 4px; background: var(--primary);
-            margin: 10px auto 0; border-radius: 2px;
+            content: ''; display: block; width: 70px; height: 4px; background: var(--gradient);
+            margin: 14px auto 0; border-radius: 2px;
         }
 
         /* --- ABOUT & EDUCATION --- */
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: flex-start; }
+        .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: flex-start; }
+        .about-grid p { color: #475569; }
+        .skills-label { display: block; margin-bottom: 0.8rem; font-weight: 600; color: var(--dark); }
         .edu-card {
-            background: white; padding: 2rem; border-radius: 10px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid var(--primary);
+            background: white; padding: 2.2rem; border-radius: 16px;
+            box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.12);
+            border-top: 4px solid transparent;
+            border-image: var(--gradient) 1;
+            transition: transform 0.3s ease;
         }
+        .edu-card:hover { transform: translateY(-4px); }
 
-        /* --- EXPERIENCE SECTION --- */
-        .exp-card {
-            background: white;
-            padding: 1.5rem 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-left: 5px solid #10b981;
-            margin-bottom: 1.5rem;
+        /* --- EXPERIENCE TIMELINE --- */
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; padding-left: 2.2rem; }
+        .timeline::before {
+            content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 2px;
+            background: linear-gradient(var(--primary), var(--accent));
         }
-        .exp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-        .exp-role { font-size: 1.2rem; font-weight: bold; }
+        .exp-card {
+            position: relative;
+            background: white;
+            padding: 1.6rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.12);
+            margin-bottom: 1.8rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .exp-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -10px rgba(15, 23, 42, 0.18); }
+        .exp-card::before {
+            content: '';
+            position: absolute;
+            left: -2.2rem;
+            top: 1.9rem;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: var(--gradient);
+            box-shadow: 0 0 0 4px #f8fafc, 0 0 0 5px var(--primary-light);
+        }
+        .exp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; gap: 1rem; flex-wrap: wrap; }
+        .exp-role { font-size: 1.2rem; font-weight: 700; }
         .exp-company { color: var(--primary); font-weight: 600; }
-        .exp-date { font-size: 0.9rem; color: var(--text-gray); background: #f1f5f9; padding: 4px 10px; border-radius: 15px; }
+        .exp-date {
+            font-size: 0.85rem; color: var(--primary); background: #eef2ff; padding: 5px 14px;
+            border-radius: 20px; font-weight: 600; white-space: nowrap;
+        }
 
         /* --- PROJECTS --- */
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
         .project-card {
-            background: white; border-radius: 10px; overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
+            background: white; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.15);
+            transition: 0.35s ease;
             display: flex;
             flex-direction: column;
-            max-width: 600px;
+            max-width: 620px;
+            border-top: 4px solid var(--primary);
         }
-        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .project-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
-        .tag { display: inline-block; background: #e2e8f0; padding: 4px 10px; border-radius: 15px; font-size: 0.8rem; margin-right: 5px; margin-bottom: 5px; color: #475569; }
-        .project-link { margin-top: auto; padding-top: 15px; color: var(--primary); font-weight: 600; display: inline-block; }
-        .project-link:hover { text-decoration: underline; }
+        .project-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -12px rgba(79, 70, 229, 0.3); }
+        .project-content { padding: 1.8rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .project-content h3 { font-size: 1.25rem; margin-bottom: 0.4rem; }
+        .tag {
+            display: inline-block; background: #eef2ff; color: var(--primary);
+            padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+            margin-right: 6px; margin-bottom: 6px;
+        }
+        .project-link {
+            margin-top: auto; padding-top: 15px; color: var(--primary); font-weight: 700; display: inline-flex;
+            align-items: center; gap: 6px;
+        }
+        .project-link:hover { gap: 10px; }
 
         /* --- CERTIFICATES --- */
-        .cert-container { display: flex; flex-direction: column; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.6rem; max-width: 1100px; margin: 0 auto; }
         .cert-item {
-            background: white; padding: 1.5rem; border-radius: 8px;
-            display: flex; flex-direction: column; gap: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; transition: 0.3s;
+            background: white; padding: 1.6rem; border-radius: 14px;
+            display: flex; gap: 1.1rem; align-items: flex-start;
+            box-shadow: 0 8px 24px -10px rgba(15, 23, 42, 0.12);
+            border: 1px solid #eef2ff;
+            transition: 0.3s ease;
         }
-        @media (min-width: 600px) {
-            .cert-item { flex-direction: row; align-items: center; justify-content: space-between; }
+        .cert-item:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -12px rgba(79, 70, 229, 0.22); }
+        .cert-icon {
+            flex-shrink: 0; width: 46px; height: 46px; border-radius: 12px;
+            background: var(--gradient); display: flex; align-items: center; justify-content: center;
+            color: white;
         }
-        .cert-info h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
-        .cert-info p { color: var(--text-gray); font-size: 0.9rem; }
-        .cert-actions { display: flex; align-items: center; gap: 1rem; }
-        .cert-date { font-weight: bold; color: var(--text-gray); font-size: 0.9rem; }
+        .cert-icon svg { width: 22px; height: 22px; }
+        .cert-info h3 { font-size: 1.05rem; margin-bottom: 0.3rem; }
+        .cert-info p { color: var(--text-gray); font-size: 0.88rem; }
+        .cert-meta { display: flex; align-items: center; gap: 0.9rem; margin-top: 0.8rem; flex-wrap: wrap; }
+        .cert-date { font-weight: 700; color: var(--primary); font-size: 0.82rem; background: #eef2ff; padding: 3px 10px; border-radius: 12px; }
         .btn-view {
-            padding: 8px 16px; background-color: transparent; border: 1px solid var(--primary);
-            color: var(--primary); border-radius: 4px; font-size: 0.9rem; font-weight: 500;
+            padding: 6px 14px; background-color: transparent; border: 1.5px solid var(--primary);
+            color: var(--primary); border-radius: 20px; font-size: 0.82rem; font-weight: 600;
             text-decoration: none; white-space: nowrap; transition: all 0.2s ease;
         }
         .btn-view:hover { background-color: var(--primary); color: white; }
 
         /* --- CONTACT --- */
-        .contact { text-align: center; background: var(--dark); color: white; }
-        .contact p { color: #94a3b8; margin-bottom: 1rem; }
-        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem; flex-wrap: wrap; }
-        .social-links a { font-size: 1.1rem; border: 1px solid #334155; padding: 10px 20px; border-radius: 5px; color: white; }
-        .social-links a:hover { background: var(--primary); border-color: var(--primary); }
+        .contact {
+            text-align: center;
+            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 100%);
+            color: white;
+        }
+        .contact .section-title { color: white; }
+        .contact .section-title::after { background: var(--gradient); }
+        .contact > p { color: #94a3b8; margin-bottom: 2rem; font-size: 1.05rem; }
+        .contact-info { display: flex; justify-content: center; gap: 2.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+        .contact-info p { display: flex; align-items: center; gap: 8px; color: #e2e8f0; font-weight: 500; }
+        .social-links { display: flex; justify-content: center; gap: 1.2rem; margin-top: 2.5rem; flex-wrap: wrap; }
+        .social-links a {
+            font-size: 0.95rem; font-weight: 600; border: 1px solid #334155; padding: 12px 24px;
+            border-radius: 50px; color: white; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .social-links a svg { width: 18px; height: 18px; }
+        .social-links a:hover { background: var(--gradient); border-color: transparent; transform: translateY(-3px); }
 
-        /* --- MOBILE --- */
+        footer { margin-top: 3.5rem; font-size: 0.9rem; opacity: 0.6; }
+
+        /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
             .about-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.5rem; }
-            nav ul { display: none; }
-            .exp-header { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .hero h1 { font-size: 2.4rem; }
+            section { padding: 4.5rem 6%; }
+
+            .menu-toggle { display: flex; }
+            nav {
+                position: fixed; top: 0; right: 0; height: 100vh; width: 70%; max-width: 300px;
+                background: var(--dark-2); padding: 6rem 2rem; transform: translateX(100%);
+                transition: transform 0.35s ease; box-shadow: -10px 0 30px rgba(0,0,0,0.3);
+            }
+            nav.open { transform: translateX(0); }
+            nav ul { flex-direction: column; gap: 1.6rem; }
+
+            .exp-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .timeline { padding-left: 1.8rem; }
+            .exp-card::before { left: -1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAV -->
     <header>
-        <div class="logo">Charan G.</div>
-        <nav>
+        <div class="logo">Charan <span>G.</span></div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <nav id="mainNav">
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
@@ -179,72 +325,67 @@
         </nav>
     </header>
 
-    <!-- HERO -->
     <section class="hero">
-        <img src="profile.jpg" alt="Charan G" class="profile-img">
-
-        <h1>Hi, I'm <span>Charan G</span></h1>
-        <p>Student at Alliance University | Website Developer | Data Analysis & Engineering</p>
+        <div class="profile-img-wrap">
+            <img src="profile.jpg" alt="Charan G" class="profile-img">
+        </div>
+        <h1>Hi, I'm <span class="gradient-text">Charan G</span></h1>
+        <p class="tagline">Student at Alliance University | Forward Deployed Engineer Intern | Data Analysis &amp; Web Development</p>
         <div>
             <a href="#projects" class="btn">View My Work</a>
             <a href="#contact" class="btn btn-outline">Contact Me</a>
         </div>
     </section>
 
-    <!-- ABOUT & EDUCATION -->
     <section id="about">
-        <h2 class="section-title">About Me</h2>
+        <h2 class="section-title reveal">About Me</h2>
         <div class="about-grid">
-            <div>
-                <p>I am a passionate B.Tech CSE student located in Bengaluru, Karnataka. I have a strong background in Engineering, Data Analysis, and Forensic Technology. I enjoy solving real-world problems through code and have hands-on experience in web development and automated systems.</p>
-                <br>
-                <div style="margin-top: 10px;">
-                    <strong>Top Skills:</strong><br>
+            <div class="reveal">
+                <p>I am a passionate B.Tech CSE student located in Bengaluru, Karnataka. I have a strong background in Engineering, Data Analysis, and Forensic Technology. I enjoy solving real-world problems through code and have hands-on experience in web development, AI platforms, and automated systems.</p>
+                <div style="margin-top: 24px;">
+                    <span class="skills-label">Top Skills</span>
+                    <span class="tag">Forward Deployed Engineering</span>
                     <span class="tag">Data Analysis</span>
-                    <span class="tag">Forensic Technology</span>
-                    <span class="tag">Engineering</span>
                     <span class="tag">Web Development</span>
+                    <span class="tag">AI &amp; Cloud Fundamentals</span>
                 </div>
             </div>
-            <div class="edu-card">
+            <div class="edu-card reveal">
                 <h3>Alliance University</h3>
                 <p style="color: var(--primary); font-weight: 600;">B.Tech in Computer Science Engineering</p>
                 <p style="color: var(--text-gray); margin-top: 10px;">2024 - 2028</p>
-                <ul style="margin-top: 10px; list-style: disc; margin-left: 20px;">
+                <ul style="margin-top: 10px; list-style: disc; margin-left: 20px; color: #475569;">
                     <li>Focus: Software Engineering, Data Structures, IoT</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- EXPERIENCE -->
     <section id="experience" style="background: #f8fafc;">
-        <h2 class="section-title">Work Experience</h2>
-        <div style="max-width: 800px; margin: 0 auto;">
-            
-            <div class="exp-card">
+        <h2 class="section-title reveal">Work Experience</h2>
+        <div class="timeline">
+
+            <div class="exp-card reveal">
                 <div class="exp-header">
                     <div>
-                        <div class="exp-role">Website Developer</div>
-                        <div class="exp-company">Future Interns</div>
+                        <div class="exp-role">Forward Deployed Engineer (FDE) Intern</div>
+                        <div class="exp-company">Bharath Lighthouse</div>
                     </div>
-                    <div class="exp-date">Dec 2025 - Present</div>
+                    <div class="exp-date">Aug 2026 - Present</div>
                 </div>
                 <p style="color: var(--text-gray);">
-                    Currently working as a Website Developer, building and maintaining web solutions.
+                    Engaged in a 6-month internship working directly on live client-facing projects under industry mentorship. Gaining practical exposure to software architecture, emerging technologies, and collaborative project development.
                 </p>
             </div>
 
         </div>
     </section>
 
-    <!-- PROJECTS -->
     <section id="projects" style="background: #f1f5f9;">
-        <h2 class="section-title">Featured Projects</h2>
+        <h2 class="section-title reveal">Featured Projects</h2>
         <div class="project-grid" style="justify-content: center;">
-            
-            <!-- Event Scanner -->
-            <div class="project-card">
+
+            <div class="project-card reveal">
                 <div class="project-content">
                     <h3>Alliance One 'Shastra' Event Scanner</h3>
                     <p style="margin: 10px 0; color: var(--text-gray);">
@@ -262,127 +403,155 @@
         </div>
     </section>
 
-    <!-- CERTIFICATIONS -->
     <section id="certifications">
-        <h2 class="section-title">Certifications</h2>
-        <div class="cert-container">
+        <h2 class="section-title reveal">Certifications</h2>
+        <div class="cert-grid">
 
-            <!-- NEW CERT: Microsoft Azure AI Fundamentals -->
-            <div class="cert-item">
+            <div class="cert-item reveal">
+                <div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17l-5.8 3 1.1-6.5-4.8-4.6 6.6-.9z"/></svg></div>
                 <div class="cert-info">
                     <h3>Microsoft Certified Azure AI Fundamentals</h3>
                     <p>Issued by Microsoft</p>
-                    <p style="font-size: 0.85rem; margin-top: 5px;">Verification: verify.certiport.com: h9CL-4wBC</p>
-                </div>
-                <div class="cert-actions">
-                    <span class="cert-date">Jun 2026</span>
-                    <!-- ⚠ Make sure this PDF is saved in your 'certificates' folder -->
-                    <a href="certificates/azure-ai-fundamentals.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">Verification: verify.certiport.com: h9CL-4wBC</p>
+                    <div class="cert-meta">
+                        <span class="cert-date">Jun 2026</span>
+                        <a href="certificates/azure-ai-fundamentals.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- NEW CERT: Oracle AI Foundations -->
-            <div class="cert-item">
+            <div class="cert-item reveal">
+                <div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17l-5.8 3 1.1-6.5-4.8-4.6 6.6-.9z"/></svg></div>
                 <div class="cert-info">
                     <h3>Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</h3>
                     <p>Issued by Oracle University</p>
-                    <p style="font-size: 0.85rem; margin-top: 5px;">Valid until June 10, 2028</p>
-                </div>
-                <div class="cert-actions">
-                    <span class="cert-date">Jun 2026</span>
-                    <!-- ⚠ Make sure this PDF is saved in your 'certificates' folder -->
-                    <a href="certificates/oracle-ai-foundations.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">Valid until June 10, 2028</p>
+                    <div class="cert-meta">
+                        <span class="cert-date">Jun 2026</span>
+                        <a href="certificates/oracle-ai-foundations.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- CERT: CodeVeda 2026 -->
-            <div class="cert-item">
+            <div class="cert-item reveal">
+                <div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17l-5.8 3 1.1-6.5-4.8-4.6 6.6-.9z"/></svg></div>
                 <div class="cert-info">
                     <h3>2nd Place - CodeVeda 2026 Hackathon</h3>
-                    <p>Issued by Alliance University & Microsoft Azure Developer Community Club</p>
-                    <p style="font-size: 0.85rem; margin-top: 5px;">Awarded for demonstrating innovation, technical excellence, and problem-solving skills.</p>
-                </div>
-                <div class="cert-actions">
-                    <span class="cert-date">Mar 2026</span>
-                    <a href="certificates/codeveda.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    <p>Issued by Alliance University &amp; Microsoft Azure Developer Community Club</p>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">Awarded for demonstrating innovation, technical excellence, and problem-solving skills.</p>
+                    <div class="cert-meta">
+                        <span class="cert-date">Mar 2026</span>
+                        <a href="certificates/codeveda.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- CERT: AI & Emerging Tech -->
-            <div class="cert-item">
+            <div class="cert-item reveal">
+                <div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17l-5.8 3 1.1-6.5-4.8-4.6 6.6-.9z"/></svg></div>
                 <div class="cert-info">
-                    <h3>AI & Emerging Technologies (5-Day Webinar Series)</h3>
+                    <h3>AI &amp; Emerging Technologies (5-Day Webinar Series)</h3>
                     <p>Issued by Alliance University</p>
-                    <p style="font-size: 0.85rem; margin-top: 5px;">Achieved 100% Attendance and a 96% Quiz Score.</p>
-                </div>
-                <div class="cert-actions">
-                    <span class="cert-date">Apr 2026</span>
-                    <a href="certificates/ai-emerging.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">Achieved 100% Attendance and a 96% Quiz Score.</p>
+                    <div class="cert-meta">
+                        <span class="cert-date">Apr 2026</span>
+                        <a href="certificates/ai-emerging.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- CERT: Alliance One Volunteer -->
-            <div class="cert-item">
+            <div class="cert-item reveal">
+                <div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17l-5.8 3 1.1-6.5-4.8-4.6 6.6-.9z"/></svg></div>
                 <div class="cert-info">
                     <h3>Alliance One Volunteer Recognition</h3>
                     <p>Issued by Alliance University</p>
-                    <p style="font-size: 0.85rem; margin-top: 5px;">Recognized for valuable contribution to the Inter-University Techno-Cultural-Sports event.</p>
-                </div>
-                <div class="cert-actions">
-                    <span class="cert-date">Mar 2026</span>
-                    <a href="certificates/alliance-one.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">Recognized for valuable contribution to the Inter-University Techno-Cultural-Sports event.</p>
+                    <div class="cert-meta">
+                        <span class="cert-date">Mar 2026</span>
+                        <a href="certificates/alliance-one.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Existing Certs -->
-            <div class="cert-item">
+
+            <div class="cert-item reveal">
+                <div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17l-5.8 3 1.1-6.5-4.8-4.6 6.6-.9z"/></svg></div>
                 <div class="cert-info">
                     <h3>AWS Certified Solutions Architect</h3>
                     <p>Issued by Forage</p>
-                    <p style="font-size: 0.85rem; margin-top: 5px;">Skills: Scalable Hosting, Architecture Design</p>
-                </div>
-                <div class="cert-actions">
-                    <span class="cert-date">Dec 2025</span>
-                    <a href="certificates/aws-cert.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">Skills: Scalable Hosting, Architecture Design</p>
+                    <div class="cert-meta">
+                        <span class="cert-date">Dec 2025</span>
+                        <a href="certificates/aws-cert.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="cert-item">
+            <div class="cert-item reveal">
+                <div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.1 6.5L12 17l-5.8 3 1.1-6.5-4.8-4.6 6.6-.9z"/></svg></div>
                 <div class="cert-info">
                     <h3>Deloitte Data Analytics Job Simulation</h3>
                     <p>Issued by Forage</p>
-                    <p style="font-size: 0.85rem; margin-top: 5px;">Skills: Data Analysis, Forensic Technology</p>
-                </div>
-                <div class="cert-actions">
-                    <span class="cert-date">Dec 2025</span>
-                    <a href="certificates/deloitte-cert.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    <p style="font-size: 0.8rem; margin-top: 5px;">Skills: Data Analysis, Forensic Technology</p>
+                    <div class="cert-meta">
+                        <span class="cert-date">Dec 2025</span>
+                        <a href="certificates/deloitte-cert.pdf" target="_blank" class="btn-view">View Certificate</a>
+                    </div>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" class="contact">
-        <h2 class="section-title" style="color: white; border-color: white;">Get In Touch</h2>
+        <h2 class="section-title reveal">Get In Touch</h2>
         <p>I am currently open to internships and project collaborations.</p>
-        
-        <div style="margin-bottom: 2rem;">
-            <p style="margin-bottom: 0.5rem; color: white;">📞 +91 9036832720</p>
-            <p style="margin-bottom: 0.5rem; color: white;">✉️ lussifur54@gmail.com</p>
+
+        <div class="contact-info">
+            <p>📞 +91 9036832720</p>
+            <p>✉️ lussifur54@gmail.com</p>
         </div>
 
-        <a href="mailto:lussifur54@gmail.com" class="btn" style="background: white; color: var(--primary);">Send Email</a>
+        <a href="mailto:lussifur54@gmail.com" class="btn">Send Email</a>
 
         <div class="social-links">
-            <a href="https://www.linkedin.com/in/charan-g-35b169338" target="_blank">LinkedIn Profile</a>
-            <a href="mailto:lussifur54@gmail.com">Email Me</a>
+            <a href="https://www.linkedin.com/in/charan-g-35b169338" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+                LinkedIn Profile
+            </a>
+            <a href="mailto:lussifur54@gmail.com">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M4 6h16v12H4z"/><path d="M4 6l8 7 8-7"/></svg>
+                Email Me
+            </a>
         </div>
-        
-        <footer style="margin-top: 3rem; font-size: 0.9rem; opacity: 0.7;">
+
+        <footer>
             &copy; 2026 Charan G. All Rights Reserved.
         </footer>
     </section>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mainNav.classList.toggle('open');
+        });
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                mainNav.classList.remove('open');
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 
 </body>
 </html>
